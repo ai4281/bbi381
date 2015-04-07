@@ -68,7 +68,8 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
         red: json.red,
         green: json.green,
         blue: json.blue,
-        zAngle: json.fov
+        zAngle: json.fov,
+        yAngle: json.bop
       } 
     }
     catch(err)
@@ -77,7 +78,8 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
         red: data.red,
         green: data.green,
         blue: data.blue,
-        zAngle: data.fov
+        zAngle: data.fov,
+        yAngle: data.bop
       }
     }
     setBPM($scope.color.blue);
@@ -90,6 +92,7 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
       green: data.green,
       blue: data.blue,
       zAngle: data.fov,
+      yAngle: data.bop,
       terrain: false,
       tree: true
   }
@@ -126,7 +129,7 @@ function loadJSON()
 
 function saveJSON()
 {
-  json = {"red":x,"green":y,"blue":z,"fov":zAngle};
+  json = {"red":x,"green":y,"blue":z,"fov":zAngle, "bop": yAngle};
 
   $.ajax({
     url: myJsonURL,
