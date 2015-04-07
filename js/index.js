@@ -1,7 +1,9 @@
+//create app
 var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
 var json;
 var myJsonURL = "https://api.myjson.com/bins/2rhv1";
 
+//routing
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -22,12 +24,16 @@ app.config(['$routeProvider',
 
 }]);
 
+//init three.js
 init();
 
+//load JSON data from server
 loadJSON();
 
+//controller for main screen with three.js
 app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
 
+  //side nav on / off
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
 
@@ -60,8 +66,11 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
     saveJSON();
   }
 
+  //load from server
   $scope.loadSettings = function() {
     console.log("loading");
+
+    loadJSON();
 
     try {
       $scope.color = {
@@ -107,6 +116,7 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
 
 }]);
 
+//turns audio off when going back to other pages
 app.controller('IntroCtrl', ['$scope', function($scope){
 
   terrainDanceBool = false;
@@ -117,8 +127,7 @@ app.controller('IntroCtrl', ['$scope', function($scope){
 }]);
 
 
-
-
+//load JSON data from server
 function loadJSON()
 {
   $.get(myJsonURL, function (data, textStatus, jqXHR) {
@@ -127,6 +136,7 @@ function loadJSON()
   });
 }
 
+//save JSON data from server
 function saveJSON()
 {
   json = {"red":x,"green":y,"blue":z,"fov":zAngle, "bop": yAngle};

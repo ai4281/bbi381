@@ -1,3 +1,5 @@
+//using Salehen's example for mountain terrain generation. Slightly modified :)
+
 var terrain;
 
 function initTerrainSalehen() {

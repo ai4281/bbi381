@@ -1,3 +1,5 @@
+//fall back for saved data in case web service doesn't work
+
 var data = 
 
 {

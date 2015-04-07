@@ -35,7 +35,7 @@ var n = d.getTime();
 
 var bassFreq = 1;
 
-//env
+//envelope values
 var envChord = T("perc", {a:15, r:25});
 var envMel = T("perc", {a:1, r:50});
 var envBass = T("perc", {a:10, r:80});
@@ -219,125 +219,6 @@ function nullIntervals()
 		console.log("nothing to nullify");
 	}
 }
-
-// //chord L2
-// var chord = T("interval", {interval:"L8", delay:1000, timeout:"600sec"}, function() {
-
-// 	//oneArray is the automata array for note choice,
-// 	//twoArray determines whether note velocity is random or really quiet
-// 	newState(oneArray);
-// 	newState(twoArray);
-
-// 	for (var i = 0; i < oneArray.length; i++)
-// 	{
-// 		if (oneArray[i] == 1)
-// 		{
-// 			var velocity;
-
-// 			if (twoArray[i] = 1)
-// 			{
-// 				velocity = Math.random() * 30 + 10;
-// 			}
-
-// 			if (twoArray[i] == 0)
-// 			{
-// 				velocity = 0;
-// 			}
-
-// 			if (chordOn)
-// 			{
-// 				synth.noteOn(150 + pitchSetFunc(i, pitchSet), velocity);		
-// 			}
-// 		}
-// 	}
-
-// }).on("ended", function() {
-//     this.stop();
-// }).set({buddies:synth}).start();
-
-
-// var melodyIteration = 0;
-
-// //melody L8
-// var melody = T("interval", {interval:"L8", delay:100, timeout:"600sec"}, function() {
-
-
-// 	//threeArray determines whehter the melodyPattern index gets played or not
-// 	//all these arrays follow the automata algorithm and get changed
-// 	newState(threeArray);
-
-// 	if (melodyIteration > melodyPattern.length)
-// 	{
-// 		melodyIteration = 0;
-
-// 		newState(melodyPattern);
-// 	}
-
-// 	melodyIteration++;
-
-// 	for (var i = 0; i < threeArray.length; i++)
-// 	{
-
-// 		if (threeArray[i] == 1)
-// 		{
-// 			if (melodyPattern[melodyIteration] == 1)
-// 			{
-// 				if (melodyOn)
-// 				{
-// 					synth2.noteOn(74 + pitchSetFunc(i, pitchSet), 5 + Math.random() * 20);
-
-// 					// console.log("yo");
-// 					return;
-// 				}
-
-				
-				
-// 			}
-			
-// 		}
-// 	}
-// }).on("ended", function() {
-//     this.stop();
-// }).set({buddies:synth2}).start();
-
-
-// //bass
-// var bass = T("interval", {interval:"L8", timeout:"600sec"}, function() {
-
-// 	//pitch is just random note from the set pitch class
-// 	//velocity is random as well
-
-// 	var loudness = 0;
-
-// 	for (var i = 0; i < twoArray.length; i++)
-// 	{
-// 		loudness += twoArray[i];
-// 	}
-
-// 	if (loudness > x/100)
-// 	{
-// 		loudness = 120;
-// 	}
-
-// 	else
-// 	{
-// 		loudness = 0;
-// 		synth3.allNoteOff();
-// 	}
-
-// 	if (bassOn)
-// 	{
-// 	 	//synth.noteOn(pitchSetFunc(Math.floor(Math.random() * 12), pitchSet) + 38, Math.random() * 90);
-// 		//synth3.noteOn( Math.floor(Math.random() * 2) * 12 + 30 , loudness);
-// 		synth3.noteOn( twoArray[4] * 12 + 30 , loudness);
-
-// 	}
-// }).on("ended", function() {
-//     this.stop();
-// }).set({buddies:synth3}).start();
-
-
-
 
 
 //has all the possiblities for 3 states

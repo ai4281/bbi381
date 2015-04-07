@@ -35,9 +35,11 @@ var defaultMaterial;
 
 var x = 100, y = 100, z = 100, shape, yAngle, zAngle = 100;
 
+//terrain
 var grass, river, moutain;
 var grassOrig = [], riverOrig = [], moutainOrig = [];
 
+//things in the sky
 var sunMesh, moonMesh;
 var sunGroup;
 var skyAngle = 0;
@@ -66,7 +68,7 @@ var pos = new THREE.Vector3(0, -5, -30);
 var terrainDanceBool = false;
 var treeDanceBool = false;
 
-
+//initialize three.js
 function init() {
 	container = document.getElementById( 'cont' );
 
@@ -139,6 +141,7 @@ function init() {
 	draw();
 }
 
+//initialize trees
 function initTrees() {
 
 	for (var i = 0; i < treeCount; i++)
@@ -171,6 +174,7 @@ function initTrees() {
 
 }
 
+//initialize clouds in the sky
 function initClouds() {
 
 	for (var i = 0; i < cloudCount; i++)
@@ -215,6 +219,7 @@ function initClouds() {
 
 }
 
+//initialize sun, moon, sun beams
 function initSky() {
 
 	var sunGeo = new THREE.SphereGeometry( 5, 5, 5 );
@@ -279,6 +284,7 @@ function initSky() {
 	scene.add(moonMesh);
 }
 
+//original vertices position for terrains to go back to
 function initOrigZArray(origZArray, mesh)
 {
 	for (var i = 0; i < mesh.geometry.vertices.length; i++)
@@ -287,6 +293,7 @@ function initOrigZArray(origZArray, mesh)
 	}
 }
 
+//initialize terrain
 function initTerrain(planeName, color, detail, noiseDiv, height, yPos, zPos, size)
 {
 
@@ -318,12 +325,14 @@ function initTerrain(planeName, color, detail, noiseDiv, height, yPos, zPos, siz
 
 }
 
+//not being used. Using Salehen's.
 function initMountain()
 {
 	
 	
 }
 
+//not being used in this.
 function initFloor()
 {
 	var material = new THREE.SpriteMaterial({color: 0xff0000});
@@ -344,6 +353,7 @@ function initFloor()
 
 }
 
+//for testing
 function initCubes(cubeArray)
 {
 	for (var ix = 0; ix < xSize; ix++)
@@ -370,6 +380,7 @@ function initCubes(cubeArray)
 
 }
 
+//for testing
 function positionCubes(cubeArrayDef, xVal, yVal, zVal)
 {
 	var i = 0;
@@ -408,6 +419,7 @@ function onDocumentMouseMove( event ) {
 
 }
 
+//touch update. was used for camera
 function onDocumentTouchMove( event ) {
 
 	//event.preventDefault();
@@ -462,7 +474,9 @@ function swapGeo(cube) {
 
 }
 
-
+//fetch slider values, set them.
+//redundant. Some of these are being set inside Angular Controller.
+//but I have them here in case there are errors.
 function setVariables(){
 	//slider values
 	try {
@@ -494,7 +508,7 @@ function setVariables(){
 }
 
 var test = document.getElementById("selector");
-
+//was used for something else
 function whatClicked(evt) {
 	try {
 		shape = document.getElementById("select_label_001").getElementsByTagName("span")[0].innerHTML;
@@ -517,6 +531,7 @@ function whatClicked(evt) {
 	
 }
 
+//make terrain dance by changing vertices
 function dancingTerrain(index, terrainName, musicArray, origZArray, movementAmount, threshold) {
 
 
@@ -563,6 +578,8 @@ function dancingTerrain(index, terrainName, musicArray, origZArray, movementAmou
 	terrainName.geometry.normalsNeedUpdate = true;
 }
 
+//scale array of three.js objects every frame
+//used for dancing trees
 function scaleCube(index, cube, musicArray) {
 
 	if (musicArray[index] == 1)
@@ -603,6 +620,7 @@ function scaleCube(index, cube, musicArray) {
 
 }
 
+//iterate through array of objects and make them dance, spin
 function iterateCubeArray(cubeArrayDef, musicArrayDef)
 {
 	var musicIndex = 0;
@@ -623,6 +641,7 @@ function iterateCubeArray(cubeArrayDef, musicArrayDef)
 
 }
 
+//make sun and moon move
 function sunMove() {
 	//sunMesh.rotation.y += y/10000;
 
@@ -642,6 +661,7 @@ function sunMove() {
 	pointLight.position = new THREE.Vector3(sunGroup.position.x, sunGroup.position.y, sunGroup.position.z - 100);
 }
 
+//make clouds move
 function moveClouds() {
 
 	for (var i = 0; i < cloudArray.length; i++)
@@ -658,20 +678,10 @@ function moveClouds() {
 
 
 function draw() {
-	// ctx.clearRect(0, 0, width, height);
-
-	// if (window.location.hash == "#/main")
-	// {
-	
-	// }
 
 	moveClouds();
 
 	setVariables();
-
-	// positionCubes(cubeArray1, y/100, y/100,y/100);
-
-	// positionCubes(cubeArray2, y/100, y/100, y/100);
 
 	sunMove();
 
@@ -687,11 +697,6 @@ function draw() {
  	{
  		iterateCubeArray(treeArray, oneArray);
  	}
-
-
-	// iterateCubeArray(cubeArray1, oneArray, 5, 5, -5);
-
-	// iterateCubeArray(cubeArray2, threeArray, 2, 2, -2);
 
 
 	window.requestAnimationFrame(draw);
@@ -720,6 +725,7 @@ function render() {
 
 	camera.lookAt( pos );
 
+	//change sky color
 	var color = new THREE.Color( 0x000000 );
 	color.r = (93 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255 + (x / 1000);
 	color.g = (100 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255  + (y / 1000);
