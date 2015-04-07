@@ -723,7 +723,7 @@ function render() {
 	var color = new THREE.Color( 0x000000 );
 	color.r = (93 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255 + (x / 1000);
 	color.g = (100 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255  + (y / 1000);
-	color.b = (172 -(Math.cos(skyAngle + Math.PI/2) * 46)) / 255 + (z / 1000);
+	color.b = (172 -(Math.cos(skyAngle + Math.PI/2) * 46)) / 255 + (yAngle / 1000);
 
 	directionalLight.intensity = (Math.cos(skyAngle + Math.PI/2)) / (-3) + 0.3;
 	//pointLight.intensity = (Math.cos(skyAngle + Math.PI/2)) / (-2);
