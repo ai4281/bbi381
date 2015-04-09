@@ -308,7 +308,7 @@ function initTerrain(planeName, color, detail, noiseDiv, height, yPos, zPos, siz
 		geometry.vertices[i].z = Math.random() * height;
 	}
 
-	var material = new THREE.MeshPhongMaterial( { color: color, shininess: 1.0, shading: THREE.FlatShading } );
+	var material = new THREE.MeshPhongMaterial( { color: color, shininess: 0, shading: THREE.FlatShading } );
 	//var material = new THREE.MeshBasicMaterial({color: color, opacity: 0.5, wireframe: false});
 
 
@@ -535,7 +535,7 @@ function whatClicked(evt) {
 function dancingTerrain(index, terrainName, musicArray, origZArray, movementAmount, threshold) {
 
 
-	if (musicArray[index])
+	if (musicArray[index] == 1)
 	{
 		//console.log("1");
 

@@ -36,14 +36,14 @@ var n = d.getTime();
 var bassFreq = 1;
 
 //envelope values
-var envChord = T("perc", {a:15, r:25});
-var envMel = T("perc", {a:1, r:50});
-var envBass = T("perc", {a:10, r:80});
+var envChord = T("perc", {a:15, r:25, lv:1});
+var envMel = T("perc", {a:1, r:50, lv:1});
+var envBass = T("perc", {a:10, r:80, lv:1.5});
 
 //synth declaration
 var synth1 = T("OscGen", {wave:"konami", env: envChord, mul:0.1});
 var synth2 = T("OscGen", {wave:"tri", env: envMel, mul:1.0, cutoff:1000});
-var synth3 = T("OscGen", {wave:"tri", env:envBass, mul:0.25});
+var synth3 = T("OscGen", {wave:"tri", env:envBass, mul: 1.0});
 
 //synth echoed
 var synth1Echo = T("reverb", {room:0.3, damp:0.2, mix:0.75}, synth1);
@@ -65,7 +65,7 @@ function setBPM(number)
 {
 	timbre.bpm = number;
 
-	nullIntervals();
+	//nullIntervals();
 	setupIntervals();
 }
 
@@ -78,7 +78,7 @@ function setupIntervals()
 	chord = T("interval", {interval:"L8", delay:1000, timeout:"600sec"}, function() {
 
 			//oneArray is the automata array for note choice,
-			//twoArray determines whether note velocity is random or really quiet
+			//twoArray determines note velocity - random or zero
 			newState(oneArray);
 			newState(twoArray);
 
@@ -90,7 +90,7 @@ function setupIntervals()
 
 					if (twoArray[i] = 1)
 					{
-						velocity = Math.random() * 30 + 10;
+						velocity = Math.random() * 30 + 100;
 					}
 
 					if (twoArray[i] == 0)
@@ -144,7 +144,7 @@ function setupIntervals()
 						if (!isNaN(yAngle))
 						{
 							//orig 74
-							synth2.noteOn(70 + yAngle/36 + pitchSetFunc(i, pitchSet), 5 + Math.random() * 20);
+							synth2.noteOn(70 + yAngle/36 + pitchSetFunc(i, pitchSet), 100 + Math.random() * 20);
 						}
 
 						// console.log("yo");
@@ -178,22 +178,10 @@ function setupIntervals()
 		if (loudness > 8 - (bassFreq/100) )
 		//if (loudness > 1 )
 		{
-			loudness = 120;
+			synth3.noteOn( twoArray[4] * 12 + 25 , 120);
 		}
 
-		else
-		{
-			loudness = 0;
-			synth3.allNoteOff();
-		}
 
-		if (bassOn)
-		{
-		 	//synth.noteOn(pitchSetFunc(Math.floor(Math.random() * 12), pitchSet) + 38, Math.random() * 90);
-			//synth3.noteOn( Math.floor(Math.random() * 2) * 12 + 30 , loudness);
-			synth3.noteOn( twoArray[4] * 12 + 25 , loudness);
-
-		}
 	}).on("ended", function() {
 	    this.stop();
 	}).set({buddies:synth3Echo}).start();
