@@ -59,7 +59,22 @@ var animateOn = true;
 
 var chord, melody, bass;
 
+function zeroVolume()
+{
+	synth1.mul = 0;
+	synth2.mul = 0;
+	synth3.mul = 0;
+}
 
+function setVolume()
+{
+	if (synth2.mul < 1.0)
+	{
+		synth1.mul += 0.01;
+		synth2.mul += 0.2;
+		synth3.mul += 0.2;	
+	}
+}
 
 function setBPM(number)
 {
@@ -71,26 +86,18 @@ function setBPM(number)
 
 function setupIntervals()
 {
-	synth1.mul = 0;
-	synth2.mul = 0;
-	synth3.mul = 0;
 
 	nullIntervals();
 
 	//chord L2
 	chord = T("interval", {interval:"L8", delay:1000, timeout:"600sec"}, function() {
 
+			setVolume();
+
 			//oneArray is the automata array for note choice,
 			//twoArray determines note velocity - random or zero
 			newState(oneArray);
 			newState(twoArray);
-
-			if (synth2.mul < 1 || synth3.mul < 1)
-			{
-				synth1.mul += 0.01;
-				synth2.mul += 0.26;
-				synth3.mul += 0.26;
-			}
 
 			for (var i = 0; i < oneArray.length; i++)
 			{

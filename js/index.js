@@ -40,9 +40,32 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
     console.log("sidebar toggled");
   };
 
+  $scope.setBass = function() {
+    zeroVolume();
+    bassFreq = $scope.color.red;
+    x = $scope.color.red;
+  }
+
+  $scope.setChord = function() {
+    zeroVolume();
+    y = $scope.color.green;
+  }
+
+  $scope.setMel = function() {
+    zeroVolume();
+    yAngle = $scope.color.yAngle;
+  }
+
   $scope.changeTempo = function() {
+    zeroVolume();
     console.log("tempo changed");
     setBPM($scope.color.blue);
+    z = $scope.color.blue;
+  }
+
+  $scope.changeFOV = function() {
+    zeroVolume();
+    zAngle = $scope.color.zAngle;
   }
 
   $scope.terrainSwitch = function() {
@@ -53,11 +76,6 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
     treeDanceBool = $scope.color.tree;
 
     console.log(treeDanceBool);
-
-  }
-
-  $scope.setBass = function() {
-    bassFreq = $scope.color.red;
   }
 
   $scope.shuffleRuleset = function() {
@@ -112,6 +130,11 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
 
 
   bassFreq = $scope.color.red;
+  x = $scope.color.red;
+  y = $scope.color.green;
+  z = $scope.color.yAngle;
+  yAngle = $scope.color.blue;
+  zAngle = $scope.color.zAngle;
 
   setupIntervals();
 

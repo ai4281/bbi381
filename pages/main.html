@@ -37,7 +37,7 @@
                 <span>Boop</span>
               </div>
 
-              <md-slider flex min="1" max="500" ng-model="color.green" aria-label="green" id="green-slider" class>
+              <md-slider flex min="1" max="500" ng-model="color.green" aria-label="green" id="green-slider" class ng-change="setChord()">
               </md-slider>
 
               <div flex="25" layout layout-align="center center">
@@ -50,7 +50,7 @@
                 <span>Bop</span>
               </div>
 
-              <md-slider flex min="1" max="360" ng-model="color.yAngle" aria-label="yAngle" id="yAngle-slider" class>
+              <md-slider flex min="1" max="360" ng-model="color.yAngle" aria-label="yAngle" id="yAngle-slider" ng-change="setMel()"class>
               </md-slider>
 
               <div flex="25" layout layout-align="center center">
@@ -63,7 +63,7 @@
                 <span>Tempo</span>
               </div>
 
-              <md-slider flex min="10" max="300" ng-model="color.blue" aria-label="blue" id="blue-slider" class ng-change="changeTempo()" >
+              <md-slider flex min="60" max="300" ng-model="color.blue" aria-label="blue" id="blue-slider" class ng-change="changeTempo()" >
               </md-slider>
 
               <div flex="25" layout layout-align="center center">
@@ -78,7 +78,7 @@
                 <span>FOV</span>
               </div>
 
-              <md-slider flex min="1" max="360" ng-model="color.zAngle" aria-label="zAngle" id="zAngle-slider" class>
+              <md-slider flex min="1" max="360" ng-model="color.zAngle" aria-label="zAngle" id="zAngle-slider" class ng-change="changeFOV()">
               </md-slider>
 
               <div flex="25" layout layout-align="center center">
