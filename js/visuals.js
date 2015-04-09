@@ -33,7 +33,7 @@ var cloudArray = [];
 var geometries = [];
 var defaultMaterial;
 
-var x = 100, y = 100, z = 100, shape, yAngle, zAngle = 100;
+var x = 500, y = 100, z = 100, shape, yAngle = 100, zAngle = 100;
 
 //terrain
 var grass, river, moutain;
