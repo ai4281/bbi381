@@ -60,6 +60,10 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
     bassFreq = $scope.color.red;
   }
 
+  $scope.shuffleRuleset = function() {
+    shuffleRuleset();
+  }
+
   $scope.saveSettings = function() {
     console.log("saving");
 

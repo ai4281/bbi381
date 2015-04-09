@@ -5,7 +5,7 @@ var data =
 {
 	"red" : 500,
 	"green" : 100,
-	"blue" : 100,
+	"blue" : 200,
 	"fov": 50,
-	"bop": 50
+	"bop": 100
 }

@@ -1,4 +1,4 @@
-timbre.bpm = 100;
+timbre.bpm = 200;
 
 //various arrays for automata use
 var oneArray = [0, 0, 1, 0, 0, 0, 1, 1];
@@ -7,7 +7,7 @@ var threeArray = [0, 0, 0, 0, 1, 0, 0, 0];
 
 var ruleset = [1, 0, 1, 0, 0, 0, 0, 1];
 
-var melodyPattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0];
+var melodyPattern = [1, 0, 1, 0, 1, 0, 0, 0];
 var percussionPattern = [1, 0, 0, 0,
  						 0, 0, 0, 0, 
  						 0, 0, 0, 0, 
@@ -27,7 +27,7 @@ var percussionPattern2 = [0, 0, 0, 0,
  						 0, 0, 0, 0];
 
 //determine which scale is used. 0 = major, 1 = minor, 2 = whole tone
-var pitchSet = 2;
+var pitchSet = 3;
 
 //time related things
 var d = new Date();
@@ -37,11 +37,11 @@ var bassFreq = 1;
 
 //envelope values
 var envChord = T("perc", {a:15, r:25, lv:1});
-var envMel = T("perc", {a:1, r:50, lv:1});
+var envMel = T("perc", {a:30, d:50, s:70, r:100, lv:1});
 var envBass = T("perc", {a:10, r:80, lv:1.5});
 
 //synth declaration
-var synth1 = T("OscGen", {wave:"konami", env: envChord, mul:0.1});
+var synth1 = T("OscGen", {wave:"konami", env: envChord, mul:0.05});
 var synth2 = T("OscGen", {wave:"tri", env: envMel, mul:1.0, cutoff:1000});
 var synth3 = T("OscGen", {wave:"tri", env:envBass, mul: 1.0});
 
@@ -71,6 +71,9 @@ function setBPM(number)
 
 function setupIntervals()
 {
+	synth1.mul = 0;
+	synth2.mul = 0;
+	synth3.mul = 0;
 
 	nullIntervals();
 
@@ -81,6 +84,13 @@ function setupIntervals()
 			//twoArray determines note velocity - random or zero
 			newState(oneArray);
 			newState(twoArray);
+
+			if (synth2.mul < 1 || synth3.mul < 1)
+			{
+				synth1.mul += 0.01;
+				synth2.mul += 0.26;
+				synth3.mul += 0.26;
+			}
 
 			for (var i = 0; i < oneArray.length; i++)
 			{
@@ -178,7 +188,10 @@ function setupIntervals()
 		if (loudness > 8 - (bassFreq/100) )
 		//if (loudness > 1 )
 		{
-			synth3.noteOn( twoArray[4] * 12 + 25 , 120);
+			if (!isNaN(yAngle))
+			{
+				synth3.noteOn( twoArray[4] * 12 + 24 + yAngle/36 , 120);
+			}
 		}
 
 
@@ -246,10 +259,22 @@ function newState(arrayVar) {
 //shuffles the ruleset when button pressed
 function shuffleRuleset()
 {
+	var sumOfVal = 0;
+
 	for (var i = 0; i < ruleset.length; i++)
 	{
-		ruleset[i] = Math.floor( Math.random() * 2 );
+		var randomVal = Math.floor( Math.random() * 2 );
+		ruleset[i] = randomVal;
+		sumOfVal += randomVal;
 	}
+
+	if (sumOfVal > 6 || sumOfVal < 2)
+	{
+		shuffleRuleset();
+	}
+
+	console.log(ruleset);
+
 }
 
 //returns appropriate pitch value for noteIndex in a scale
@@ -322,6 +347,29 @@ function pitchSetFunc(noteIndex, pitchSetNum)
 			case 6: return 12;
 
 			case 7: return 14;
+		}
+	}
+
+	//soundprism scale
+	else if (pitchSetNum == 3)
+	{
+		switch(noteIndex)
+		{
+			case 0: return 0;
+
+			case 1: return 9;
+
+			case 2: return 6;
+
+			case 3: return 2;
+
+			case 4: return 11;
+
+			case 5: return 7;
+
+			case 6: return 4;
+
+			case 7: return 12;
 		}
 	}
 

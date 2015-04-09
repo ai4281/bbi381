@@ -182,7 +182,7 @@ function initClouds() {
 		var cloudGeo1 = new THREE.DodecahedronGeometry(0.5, 0);
 		var cloudGeo2 = new THREE.DodecahedronGeometry(0.8, 0);
 		var cloudGeo3 = new THREE.DodecahedronGeometry(0.5, 0);
-		var cloudMat = new THREE.MeshPhongMaterial( {color: 0xffffff, shininess: 0, transparent:true, opacity:0.8, shading: THREE.FlatShading} );
+		var cloudMat = new THREE.MeshPhongMaterial( {color: 0xffffff, shininess: 0, transparent:true, opacity:0.5, shading: THREE.FlatShading} );
 		
 		var cloudMesh1 = new THREE.Mesh(cloudGeo1, cloudMat);
 		var cloudMesh2 = new THREE.Mesh(cloudGeo2, cloudMat);
@@ -194,7 +194,7 @@ function initClouds() {
 
 		var pos1 = new THREE.Vector3(randomX - 0.7, randomY, randomZ);
 
-		var scaleNum = 1.5;
+		var scaleNum = 2;
 
 		cloudMesh1.position.set(randomX - 0.7 * scaleNum, randomY, randomZ);
 		cloudMesh2.position.set(randomX, randomY, randomZ);
@@ -651,7 +651,7 @@ function sunMove() {
 	moonMesh.position.x = Math.cos(skyAngle) * -400;
 	moonMesh.position.y = Math.sin(skyAngle) * -200;
 
-	skyAngle -= z / 25000;
+	skyAngle -= (z / 15000 + 0.001);
 
 	if (skyAngle > Math.PI * 2)
 	{
@@ -727,9 +727,9 @@ function render() {
 
 	//change sky color
 	var color = new THREE.Color( 0x000000 );
-	color.r = (93 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255 + (x / 1000);
-	color.g = (100 -(Math.cos(skyAngle + Math.PI/2) * 66)) / 255  + (y / 1000);
-	color.b = (172 -(Math.cos(skyAngle + Math.PI/2) * 46)) / 255 + (yAngle / 1000);
+	color.r = (93 -(Math.cos(skyAngle + Math.PI/2) * 80)) / 255 + (x / 1000);
+	color.g = (100 -(Math.cos(skyAngle + Math.PI/2) * 80)) / 255  + (y / 1000);
+	color.b = (172 -(Math.cos(skyAngle + Math.PI/2) * 60)) / 255 + (yAngle / 500);
 
 	directionalLight.intensity = (Math.cos(skyAngle + Math.PI/2)) / (-3) + 0.3;
 	//pointLight.intensity = (Math.cos(skyAngle + Math.PI/2)) / (-2);
