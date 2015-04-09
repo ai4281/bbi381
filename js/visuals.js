@@ -681,7 +681,7 @@ function draw() {
 
 	moveClouds();
 
-	setVariables();
+	//setVariables();
 
 	sunMove();
 
