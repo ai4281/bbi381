@@ -90,7 +90,7 @@ function setupIntervals()
 	nullIntervals();
 
 	//chord L2
-	chord = T("interval", {interval:"L8", delay:1000, timeout:"600sec"}, function() {
+	chord = T("interval", {interval:"L8"}, function() {
 
 			setVolume();
 
@@ -133,7 +133,7 @@ function setupIntervals()
 	var melodyIteration = 0;
 
 	//melody L8
-	melody = T("interval", {interval:"L8", delay:100}, function() {
+	melody = T("interval", {interval:"L8"}, function() {
 
 
 		//threeArray determines whehter the melodyPattern index gets played or not
@@ -180,7 +180,7 @@ function setupIntervals()
 
 
 	//bass
-	bass = T("interval", {interval:"L8", timeout:"600sec"}, function() {
+	bass = T("interval", {interval:"L8"}, function() {
 
 		//pitch is just random note from the set pitch class
 		//velocity is random as well
