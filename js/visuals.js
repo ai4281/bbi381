@@ -1,21 +1,14 @@
 var width = window.innerWidth,
 	height = window.innerHeight;
 
-// //delay to ensure viewport size correctness
-// var t = setTimeout(function() {
-// 	width = window.innerWidth,
-// 	height = window.innerHeight;
+//delay to ensure viewport size correctness
+var t = setTimeout(function() {
+	width = window.innerWidth,
+	height = window.innerHeight;
 
-// 	// console.log(width + ":" + height);
-// 	// var node = document.createElement("p");
-// 	// var stringNode = document.createTextNode((width + ":" + height).toString());
-// 	// node.appendChild(stringNode);
+	onWindowResize();
 
-// 	// document.getElementById("console").appendChild(node);
-
-// 	onWindowResize();
-
-// }, 1000);
+}, 1000);
 
 var container;
 var camera, scene, renderer;
