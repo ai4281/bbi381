@@ -29,7 +29,7 @@ var defaultMaterial;
 var x = 500, y = 100, z = 100, shape, yAngle = 100, zAngle = 100;
 
 //terrain
-var grass, river, moutain;
+var grass, river, terrain;
 var grassOrig = [], riverOrig = [], moutainOrig = [];
 
 //things in the sky
@@ -110,7 +110,7 @@ function init() {
 	grass = scene.getObjectByName( "grass", true );
 	river = scene.getObjectByName( "river", true );
 	
-	initTerrainSalehen();
+	initMountain();
 
 	initOrigZArray(grassOrig, grass);
 	initOrigZArray(riverOrig, river);
@@ -318,10 +318,120 @@ function initTerrain(planeName, color, detail, noiseDiv, height, yPos, zPos, siz
 
 }
 
-//not being used. Using Salehen's.
+//Mostly based on Salehen's mountain code
 function initMountain()
 {
-	
+	var geometry = new THREE.PlaneGeometry(
+		// Width
+		80,
+		// Height
+		150,
+		// Horziontal segmentation
+		50,
+		// Vertical segmentation
+		50
+	);
+
+	var XRange = 80;
+	var XOffset = 0;
+	var YRange = 50;
+	var YOffset = 30;
+	var SigmaRange = 1.5
+	var SigmaOffset = 0.7;
+	var HeightRange = 12;
+
+	// Represents 
+	var HeightOffset = 4;
+
+	var MountainCount = 12;
+
+	var mountains = [];
+	for ( var i = 0; i < MountainCount; i++ ) {
+
+		mountains.push( {
+			position: new THREE.Vector2(
+				(Math.random() - 0.5)*XRange + XOffset,
+				(Math.random() - 0.5)*YRange + YOffset
+			),
+			sigma: Math.random()*SigmaRange + SigmaOffset,
+			height: Math.random()*HeightRange + HeightOffset
+		} );
+
+	}
+
+	geometry.__dirtyVertices = true;
+
+	var TerrainBumpHeight = 1;
+
+	// And this is where we actually modify the vertices of our terrain.
+	for ( var i = 0; i < geometry.vertices.length; i++ ) {
+
+		// Perform some random extrusion on our terrain to give it some bumps to make
+		// it appear natural when rendered to the screen.
+		geometry.vertices[i].z +=
+			(Math.random() - 0.5) * TerrainBumpHeight;
+
+		var relative = scene.localToWorld( geometry.vertices[i].clone() );
+
+		for ( var j = 0; j < mountains.length; j++ ) {
+
+			var mountain = mountains[j];
+			var dist = Math.sqrt(
+				Math.pow( relative.x-mountain.position.x, 2 ) +
+				Math.pow( relative.y-mountain.position.y, 2 )
+			);
+
+			// Gaussian function used on the terrain, to get a mountain-like structure.
+			geometry.vertices[i].z +=
+				Math.exp( -dist / (2*Math.pow( mountain.sigma, 2 )) ) * mountain.height
+
+		}
+
+	}
+
+	for ( var i = 0; i < geometry.faces.length; i++ ) {
+
+		var avg = new THREE.Vector3();
+		avg.add( geometry.vertices[geometry.faces[i].a] );
+		avg.add( geometry.vertices[geometry.faces[i].b] );
+		avg.add( geometry.vertices[geometry.faces[i].c] );
+		avg.divideScalar(3);
+
+		var relative = scene.localToWorld( avg );
+
+		if ( relative.z < 2.9 ) {
+
+			geometry.faces[i].color.setHex( 0x78A95C );
+		
+		} else if ( relative.z >= 2.9 && relative.z < 6.5 ) {
+
+			geometry.faces[i].color.setHex( 0xFF9B65 );
+
+		} else if ( relative.z >= 6.5 ) {
+
+			geometry.faces[i].color.setHex( 0xFFFCC6 );
+		}
+
+	}
+
+	var material = new THREE.MeshPhongMaterial( {
+		shading: THREE.FlatShading,
+
+		vertexColors: THREE.FaceColors,
+
+		shininess: 0,
+		wireframe: false
+	} );
+
+	geometry.verticesNeedUpdate = true;
+	geometry.normalsNeedUpdate = true;
+	geometry.dynamic = true;
+
+	terrain = new THREE.Mesh( geometry, material );
+
+	terrain.rotation.x = -Math.PI/2;
+
+	scene.add( terrain );
 	
 }
 
