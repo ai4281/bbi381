@@ -6,6 +6,6 @@ var data =
 	"red" : 500,
 	"green" : 100,
 	"blue" : 200,
-	"fov": 80,
+	"fov": 59,
 	"bop": 100
 }
